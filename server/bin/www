@@ -3,7 +3,9 @@
 /**
  * Module dependencies.
  */
-const db = require('../models/db')
+const recipesDB = require('../models/recipes')
+const ingredientsDB = require('../models/ingredients')
+const recipeIngredientsDB = require('../models/recipeIngredients')
 
 var app = require('../app');
 var debug = require('debug')('server:server');
@@ -26,7 +28,10 @@ var server = http.createServer(app);
  * Listen on provided port, on all network interfaces.
  */
 
-db.init()
+recipesDB.init()
+ingredientsDB.init()
+recipeIngredientsDB.init()
+
 server.listen(port, '0.0.0.0');
 server.on('error', onError);
 server.on('listening', onListening);

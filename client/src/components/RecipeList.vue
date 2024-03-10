@@ -3,7 +3,7 @@ import { ref, reactive, onMounted, type Ref, watch, onActivated} from 'vue';
 import { useRouter, useRoute } from 'vue-router'
 
 import axios from 'axios'
-const recipes: Ref<{id: number, name: string, lastupdated: Date, ingredients: string, directions: string}[]> = ref([]);
+const recipes: Ref<{id: number, name: string, lastupdated: Date, ingredients: string[], directions: string}[]> = ref([]);
 const router = useRouter();
 
 onMounted(async () => {
@@ -36,7 +36,16 @@ async function refreshData() {
         console.error('Error fetching data:', err);
     }
 }
-
+async function getRecipeIngredients(id:number) {
+    try {
+        const response = await axios.get('http://localhost:3000/recipes-api/recipes/' + id)
+        recipes.value = response.data
+        console.log(response.data)
+    }
+    catch(err) {
+        console.error('Error fetching data:', err);
+    }   
+}
 </script>
 
 <template>
@@ -55,13 +64,11 @@ async function refreshData() {
                 <div class="modal-content">
                     <div class="modal-header">
                         <h1 class="modal-title fs-5"> {{ recipe.name }}</h1>
-
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
 
                         <p>Ingredients:<br> 
-                        
                             {{ recipe.ingredients }} </p>
                         <p>Directions: <br>
                             {{ recipe.directions }}</p>

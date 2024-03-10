@@ -7,8 +7,8 @@ var cors = require('cors')
 var app = express();
 app.use(cors())
 
-var indexRouter = require('./routes/index');
 var recipesRouter = require('./routes/recipes');
+var ingredientsRouter = require('./routes/ingredients');
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -21,5 +21,6 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', express.static(path.join(__dirname, './static'), { 'index': ['index.html'] }))
 app.use('/recipes-api', recipesRouter);
+app.use('/ingredients-api', ingredientsRouter);
 
 module.exports = app;

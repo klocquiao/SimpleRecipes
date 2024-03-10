@@ -7,7 +7,7 @@ import RecipeForm from './RecipeForm.vue'
 const router = useRouter();
 const route = useRoute();
 const recipeId = ref('');
-const recipe: Ref<{id: number, name: string, lastupdated: Date, ingredients: string, directions: string} | null> = ref(null);
+const recipe: Ref<{id: number, name: string, lastupdated: Date, ingredients: number[], directions: string} | null> = ref(null);
 const isRecipe = ref(false);
 
 onMounted(async () => {
@@ -17,6 +17,7 @@ onMounted(async () => {
         const response = await axios.get('http://localhost:3000/recipes-api/recipes/' + recipeId.value)
         recipe.value = response.data
         isRecipe.value = true
+        console.log(response)
     }
     catch(err) {
         console.error('Error fetching data:', err);
